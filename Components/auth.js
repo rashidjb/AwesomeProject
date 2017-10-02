@@ -49,11 +49,11 @@ const auth = observer(new class auth {
             }
         )
         .then(
-            (res) => {
+            function(res){
                 console.log(username, password)
                 this.getToken(username,password)
-            }
-        ).bind(this).catch((error) => console.log(error)).done();
+            }.bind(this)
+        ).catch((error) => console.log(error)).done();
     }
 
     getToken(username,password){
