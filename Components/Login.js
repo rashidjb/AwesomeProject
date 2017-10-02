@@ -3,6 +3,8 @@ import { View, Picker } from 'react-native';
 import { Container, Text, Header, Content, Form, Item, Input, Button, Label} from 'native-base';
 import { observer } from "mobx-react";
 
+import auth from "./auth";
+
 export default observer(class Login extends React.Component {
     constructor(props) {
     super(props);
@@ -14,11 +16,15 @@ export default observer(class Login extends React.Component {
     handleSubmit(e){
         console.log(this.state.username);
         console.log(this.state.password);
-
+        auth.login(this.state.username, this.state.password);
+    }
+    componentWillMount(){
+        auth.firstLoad();
     }
     render() {
         return (
             <Container>
+                <Text>{this.props.store.token}</Text>
                 <Text> Login:</Text>
                 <Form>
                     <Item>

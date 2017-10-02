@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Container, Header, Content, List, ListItem, Text } from 'native-base';
 import { ListView} from 'react-native';
+
+
 export default class MyNewList extends Component {
     constructor(props){
         super(props);

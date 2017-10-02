@@ -7,7 +7,11 @@ class myStore {
             says: 'MOooOOooO',
             headerTitle: 'Header',
             photos: "",
+            authenticated: false,
+            username: '',
+            token: '',
             })
+
     }
 }
 

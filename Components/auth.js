@@ -1,6 +1,6 @@
 import {observer} from 'mobx-react';
-import $ from 'jquery';
 import store from '../Store';
+import {AsyncStorage} from 'react-native';
 
 const auth = observer(new class auth {
     login(username,password){
@@ -16,9 +16,9 @@ const auth = observer(new class auth {
     }
     firstLoad() {
         if (this.loggedIn()) {
-            store.token = AsyncStorage.getItem('token');
+            AsyncStorage.getItem('token').then((x) => store.token = x)
             store.authenticated = true;
-            store.username = AsyncStorage.getItem('username');
+            AsyncStorage.getItem('username').then((x) => store.token = x)
         }
     }
     loggedIn(){
@@ -34,8 +34,6 @@ const auth = observer(new class auth {
     }
 
 
-
-
     signup(username,password){
         fetch('http://139.59.119.40/api/register/',
             {
@@ -43,10 +41,10 @@ const auth = observer(new class auth {
                 headers:{
                     "Accept": 'application/json',
                     "Content-Type":"application/json",
-                }
+                },
                 body: JSON.stringify({
                     "username": username,
-                    "password": password
+                    "password": password,
                 })
             }
         )
@@ -58,16 +56,13 @@ const auth = observer(new class auth {
         ).bind(this).catch((error) => console.log(error)).done();
     }
 
-
-
-
     getToken(username,password){
         fetch('http://139.59.119.40/api/login/', {
             method: 'POST',
             headers:{
                 "Accept": 'application/json',
                 "Content-Type":"application/json",
-            }
+            },
             body: JSON.stringify({
                 "username": username,
                 "password": password
@@ -78,10 +73,10 @@ const auth = observer(new class auth {
             store.authenticated = true;
             store.token = res.token;
             store.username = res.username;
-            await AsyncStorage.setItem('token', res.token);
-            await AsyncStorage.setItem('username', res.username);
+            AsyncStorage.setItem('token', res.token);
+            AsyncStorage.setItem('username', res.username);
             console.log(res.username);
         }).catch((error) => console.log(error)).done();
     }
-}
+})
 export default auth;
